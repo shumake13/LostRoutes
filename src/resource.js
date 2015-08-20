@@ -35,8 +35,8 @@ var res_NativeiOS={
 //其他平台包括Web和Android等
 var res_Other={
    //texture 資源
-    texture_res:'res/texture/LostRoutes_Texture.png',
     //plist
+    texture_res:'res/texture/LostRoutes_Texture.png',
     texture_plist:'res/texture/LostRoutes_Texture.plist',
     //music
     musicGame:"res/sound/gameBg.mp3",
