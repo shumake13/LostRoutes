@@ -32,6 +32,35 @@ var HomeMenuLayer=cc.Layer.extend({
         end.x=winSize.width/2;
         end.y=end.getContentSize().height/2;
         this.addChild(end);
+        
+        //開始菜單
+        var startSpriteNormal=new cc.Sprite("#button.start.png");
+        var startSpriteSelected=new cc.Sprite("#button.start-on.png");
+        var startMenuItem=new cc.MenuItemSprite(startSpriteNormal,startSpriteSelected,this.menuItemCallback,this);
+        startMenuItem.setTag(HomeMenuActionTypes.MenuItemStart);
+        
+        //設置菜單
+        var settingSpriteNormal=new cc.Sprite("#button.setting.png");
+        var settingSpriteSelected=new cc.Sprite("#button.setting-on.png");
+        var settingMenuItem=new cc.MenuItemSprite(settingSpriteNormal,
+        		settingSpriteSelected,
+        		this.menuItemCallback,this);
+        
+        //幫助菜單
+        var helpSpriteNormal=new cc.Sprite("#button.help.png");
+        var helpSpriteSelected=new cc.Sprite("#button.help-on.png");
+        var helpMenuItem=new cc.MenuItemSprite(
+        		helpSpriteNormal,
+        		helpSpriteSelected,
+        		this.menuItemCallback,this);
+        helpMenuItem.setTag(HomeMenuActionTypes.MenuItemHelp);
+        
+        var mu=new cc.Menu(startMenuItem,settingMenuItem,helpMenuItem);
+        mu.x=winSize.width/2;
+        mu.y=winSize.height/2;
+        mu.alignItemsVerticallyWithPadding(10);
+        
+        this.addChild(mu);
 
         return true;
     },
@@ -44,6 +73,30 @@ var HomeMenuLayer=cc.Layer.extend({
     },
     onExit:function(){
         this._super();
+    },
+    menuItemCallback:function(sender){
+    	//播放音效
+    	if(effectStatus==BOOL.YES){
+    		cc.audioEngine.playEffect(res_platform.effectBlip);
+    	}
+    	var tsc=null;
+    	switch(sender.tag){
+    	case HomeMenuActionTypes.MenuItemStart:
+    		tsc=new cc.TransitionFade(1.0,new GamePlayScene());
+    		cc.log("StartCallBack")
+    		break;
+    	case HomeMenuActionTypes.MenuItemHelp:
+    		tsc=new cc.TransitionFade(1.0,new HelpScene());
+    		cc.log("HelpCallback");
+    		break;
+    	case HomeMenuActionTypes.MenuItemSetting:
+    		tsc=new cc.TransitionFade(1.0,new SettingScene());
+    		cc.log("SettingCallback");
+    		break;
+    	}
+    	if(tsc){
+    		cc.director.pushScene(tsc);
+    	}
     }
 });
 

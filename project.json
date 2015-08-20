@@ -13,6 +13,9 @@
     "jsList" : [
         "src/resource.js",
         "src/HomeScene.js",
-        "src/SystemConst.js"
+        "src/SystemConst.js",
+        "src/SettingScene.js",
+        "src/HelpScene.js",
+        "src/GamePlayScene.js"
     ]
 }
