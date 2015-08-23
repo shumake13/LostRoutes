@@ -45,6 +45,7 @@ var HomeMenuLayer=cc.Layer.extend({
         var settingMenuItem=new cc.MenuItemSprite(settingSpriteNormal,
         		settingSpriteSelected,
         		this.menuItemCallback,this);
+        settingMenuItem.setTag(HomeMenuActionTypes.MenuItemSetting);
         
         //幫助菜單
         var helpSpriteNormal=new cc.Sprite("#button.help.png");
