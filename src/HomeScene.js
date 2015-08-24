@@ -17,7 +17,6 @@ var HomeMenuLayer=cc.Layer.extend({
         //加載精靈影格緩存
         cc.spriteFrameCache.addSpriteFrames(res_platform.texture_plist,res_platform.texture_res);
         musicStatus=cc.sys.localStorage.getItem(MUSIC_KEY);
-        cc.log(musicStatus)
         effectStatus=cc.sys.localStorage.getItem(EFFECT_KEY);
 
         var bg=new cc.TMXTiledMap(res.red_bg_tmx);
@@ -69,7 +68,7 @@ var HomeMenuLayer=cc.Layer.extend({
         this._super();
         cc.log("HomeMenuLayer onEnterTransitionDidFinish");
         if(musicStatus==BOOL.YES){
-            cc.audioEngine.playMusic(res_platform.musicHome,true);
+            if(!cc.audioEngine.isMusicPlaying()) cc.audioEngine.playMusic(res_platform.musicHome,true);
         }
     },
     onExit:function(){

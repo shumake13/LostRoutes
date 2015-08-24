@@ -97,7 +97,7 @@ var SettingLayer=cc.Layer.extend({
 		this._super();
 		cc.log("SettingLayer onEnterTransitionDidFinish");
 		if(musicStatus==BOOL.YES){
-			cc.audioEngine.playMusic(res_platform.musicHome, true);
+			if(!cc.audioEngine.isMusicPlaying()) cc.audioEngine.playMusic(res_platform.musicHome, true);
 		}
 	},
 	onExit:function(){
@@ -108,8 +108,6 @@ var SettingLayer=cc.Layer.extend({
 	onExitTransitionDidStart:function(){
 		this._super();
 		cc.log("SettingLayer onExitTransitionDidStart");
-		cc.audioEngine.stopMusic(res_platform.musicHome);
-		
 	}
 	
 });
