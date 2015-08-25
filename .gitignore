@@ -12,3 +12,4 @@ tools/
 # Ignore files built by Cocos Code IDE
 .settings/
 .metadata/
+*.DS_Store
