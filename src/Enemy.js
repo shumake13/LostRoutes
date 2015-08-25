@@ -68,7 +68,6 @@ var Enemy=cc.PhysicsSprite.extend({
             this.body=new cp.Body(1,cp.momentForPoly(1,verts,cp.vzero));
             shape=new cp.PolyShape(this.body,verts,cp.vzero);
         }
-
         this.space.addBody(this.body);
 
         shape.setElasticity(0.5);
@@ -76,6 +75,7 @@ var Enemy=cc.PhysicsSprite.extend({
         shape.setCollisionType(Collision_Type.Enemy);
         this.space.addShape(shape);
         this.body.data=this;
+
         this.scheduleUpdate();
     },
     update:function(dt){

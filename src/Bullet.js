@@ -7,8 +7,7 @@ var Bullet=cc.PhysicsSprite.extend({
     ctor:function(spriteFrameName,space){
         this._super(spriteFrameName);
         this.space=space;
-        this.body=new cp.body(1,cp.momentForBox(1,this.getContentSize().width,this.getContentSize().height));
-
+        this.body=new cp.Body(1,cp.momentForBox(1,this.getContentSize().width,this.getContentSize().height));
         this.space.addBody(this.body);
 
         var shape=new cp.BoxShape(this.body,this.getContentSize().width,this.getContentSize().height);
