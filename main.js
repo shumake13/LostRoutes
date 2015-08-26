@@ -48,8 +48,8 @@
  */
 
 cc.game.onStart = function(){
-   // cc.view.adjustViewPort(true);
-    cc.view.setDesignResolutionSize(640, 960, cc.ResolutionPolicy.FIXED_WIDTH);
+    //cc.view.adjustViewPort(true);
+    cc.view.setDesignResolutionSize(640, 960, cc.ResolutionPolicy.SHOW_ALL);
     cc.view.resizeWithBrowserSize(true);
     cc._loaderImage=res.loading_jpg;
 
