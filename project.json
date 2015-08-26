@@ -17,6 +17,7 @@
         "src/SettingScene.js",
         "src/HelpScene.js",
         "src/GamePlayScene.js",
+        "src/GameOverScene.js",
         "src/Enemy.js",
         "src/Fighter.js",
         "src/Bullet.js"

@@ -42,20 +42,32 @@ var GamePlayLayer=cc.Layer.extend({
 		var spriteA=bodyA.data;
 		var spriteB=bodyB.data;
 
-		//檢查到砲彈集中敵機-----spriteB為敵人
+		//檢查到砲彈擊中敵機-----spriteB為敵人
 		if(spriteA instanceof Bullet&&spriteB instanceof Enemy&&spriteB.isVisible()){
 			//使得砲彈消失
 			spriteA.setVisible(false);
 			this.handleBulletCollidingWithEnemy(spriteB);
 			return false;
 		}
-		//-----spriteA為敵人
+		//檢查到砲彈擊中敵機------spriteA為敵人
 		if(spriteA instanceof Enemy&&spriteA.isVisible()&&spriteB instanceof Bullet){
 			//砲彈消失
 			spriteB.setVisible(false);
 			this.handleBulletCollidingWithEnemy(spriteA);
 			return false;
 		}
+
+		//檢查到敵機與我方飛機碰撞
+		if(spriteA instanceof Fighter && spriteB instanceof Enemy && spriteB.isVisible()){
+			this.handleFighterCollidingWithEnemy(spriteB);
+			return false;
+		}
+
+		if(spriteA instanceof  Enemy && spriteA.isVisible()&&spriteB instanceof Fighter){
+			this.handleFighterCollidingWithEnemy(spriteA);
+			return false;
+		}
+
 		return false;
 	},
 	//處理子彈打到敵人
@@ -110,6 +122,42 @@ var GamePlayLayer=cc.Layer.extend({
 			enemy.setVisible(false);
 			//重設敵人狀態
 			enemy.spawn();
+		}
+	},
+	//處理敵機與我方飛機碰撞
+	handleFighterCollidingWithEnemy:function(enemy){
+		var node=this.getChildByTag(GameSceneNodeTag.ExplosionParticleSystem);
+		if(node){
+			this.removeChild(node);
+		}
+		//爆炸粒子效果
+		var explosion=new cc.ParticleSystem(res.explosion_plist);
+		explosion.x=this.fighter.x;
+		explosion.y=this.fighter.y;
+		this.addChild(explosion,2,GameSceneNodeTag.ExplosionParticleSystem);
+		//爆炸音效
+		if(effectStatus==BOOL.YES){
+			cc.audioEngine.playEffect(res_platform.effectExplosion);
+		}
+		//設置敵人消失
+		enemy.setVisible(false);
+		enemy.spawn();
+		//設置玩家消失
+		this.fighter.hitPoints--;
+		this.updateStatusBarFighter();
+		//遊戲結束
+		if(this.fighter.hitPoints<=0){
+			cc.log("GameOver");
+			var scene=new GameOverScene();
+			var layer=new GameOverLayer(this.score);
+			scene.addChild(layer);
+			cc.director.pushScene(new cc.TransitionFade(1,scene));
+		}else{
+			this.fighter.body.setPos(cc.p(winSize.width/2,70));
+			var ac1=cc.show();
+			var ac2= cc.fadeIn(3.0);
+			var seq=cc.sequence(ac1,ac2);
+			this.fighter.runAction(seq);
 		}
 	},
 	//初始化遊戲背景
@@ -315,7 +363,7 @@ var GamePlayLayer=cc.Layer.extend({
 	},
 	//離開遊戲場景
 	onExit:function(){
-		cc.log("GamePlayer onExit");
+		cc.log("GamePlayScene  onExit");
 		this.unscheduleUpdate();
 		//停止調用shootBullet函數
 		this.unschedule(this.shootBullet);

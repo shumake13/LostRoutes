@@ -17,6 +17,7 @@ var Enemy=cc.PhysicsSprite.extend({
         switch(enemyType){
             case EnemyTypes.Enemy_Stone:
                 enemyFrameName=EnemyName.Enemy_Stone;
+                hitPointsTemp=Enemy_initialHitPoints.Enemy_Stone;
                 velocityTemp=Sprite_Velocity.Enemy_Stone;
                 break;
             case EnemyTypes.Enemy_1:
@@ -82,8 +83,10 @@ var Enemy=cc.PhysicsSprite.extend({
         //設置隕石和行星旋轉
         switch(this.enemyType){
             case EnemyTypes.Enemy_Stone:
+                this.setRotation(this.getRotation()-0.5);
                 break;
             case EnemyTypes.Enemy_Planet:
+                this.setRotation(this.getRotation()+1);
                 break;
         }
         //計算移動位置
