@@ -5,6 +5,7 @@ Thumbs.db
 frameworks/
 runtime/
 tools/
+script/
 
 # Ignore files built by  WebStorm
 .idea/
