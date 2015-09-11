@@ -46,23 +46,6 @@ var GameOverLayer=cc.Layer.extend({
         tap.y=winSize.height-860;
         this.addChild(tap);
 
-        //創建觸摸事件監聽器
-        this.touchListener=cc.EventListener.create({
-            event:cc.EventListener.TOUCH_ONE_BY_ONE,
-            swallowTouches:true,    //設置是否吞沒事件
-            onTouchBegan:function(touch,event){
-                //播放音效
-                if(effectStatus==BOOL.YES){
-                    cc.audioEngine.playEffect(res_platform.effectBlip);
-                }
-                cc.director.popScene();
-                return false;
-            }
-        });
-
-        //註冊觸摸事件監聽器
-        cc.eventManager.addListener(this.touchListener,this);
-        this.touchListener.retain();
         return true;
     },
     onEnter:function(){
@@ -75,6 +58,26 @@ var GameOverLayer=cc.Layer.extend({
         if(musicStatus==BOOL.YES){
             cc.audioEngine.playMusic(res_platform.musicGame,true);
         }
+        this.addListener();
+    },
+    addListener:function(){
+    	//創建觸摸事件監聽器
+    	this.touchListener=cc.EventListener.create({
+    		event:cc.EventListener.TOUCH_ONE_BY_ONE,
+    		swallowTouches:true,    //設置是否吞沒事件
+    		onTouchBegan:function(touch,event){
+    			//播放音效
+    			if(effectStatus==BOOL.YES){
+    				cc.audioEngine.playEffect(res_platform.effectBlip);
+    			}
+    			cc.director.popScene();
+    			return false;
+    		}
+    	});
+
+    	//註冊觸摸事件監聽器
+    	cc.eventManager.addListener(this.touchListener,this);
+    	this.touchListener.retain();
     },
     onExit:function(){
         this._super();
