@@ -239,6 +239,18 @@ var GamePlayLayer = cc.Layer.extend({
         //游戏结束
         if (this.fighter.hitPoints <= 0) {
             cc.log("GameOver");
+
+            //暫停物理空間所有事件
+            var nodes = this.getChildren();
+            for (var i = 0; i < nodes.length; i++) {
+                var node = nodes[i];
+                node.unscheduleUpdate();
+                this.unschedule(this.shootBullet);
+            }
+
+            //暂停触摸事件
+            cc.eventManager.pauseTarget(this.fighter);
+
             var scene = new GameOverScene();
             var layer = new GameOverLayer(this.score);
             scene.addChild(layer);
@@ -398,8 +410,6 @@ var GamePlayLayer = cc.Layer.extend({
             this.touchFighterlistener.release();
             this.touchFighterlistener = null;
         }
-
-
         cc.pool.drainAllPools();
         
     },

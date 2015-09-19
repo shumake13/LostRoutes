@@ -55,9 +55,7 @@ var GameOverLayer=cc.Layer.extend({
     onEnterTransitionDidFinish:function(){
         this._super();
         cc.log("GameOverLayer onEnterTransitionDidFinish");
-        if(musicStatus==BOOL.YES){
-            cc.audioEngine.playMusic(res_platform.musicGame,true);
-        }
+
         this.addListener();
     },
     addListener:function(){
@@ -92,7 +90,6 @@ var GameOverLayer=cc.Layer.extend({
     onExitTransitionDidStart:function(){
         this._super();
         cc.log("GameOverLayer onExitTransitionDidStart");
-        cc.audioEngine.stopMusic(res_platform.musicGame);
     }
 });
 
