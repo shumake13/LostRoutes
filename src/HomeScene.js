@@ -61,7 +61,7 @@ var HomeMenuLayer=cc.Layer.extend({
         mu.alignItemsVerticallyWithPadding(10);
         
         this.addChild(mu);
-
+       
         return true;
     },
     onEnterTransitionDidFinish:function(){
